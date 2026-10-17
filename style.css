@@ -177,7 +177,18 @@ main, .nav, .foot { position: relative; z-index: 1; }
 .chat { margin-top: 36px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
 .chat__head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 12px 18px; border-bottom: 1px solid var(--line); font: 500 .82rem var(--f-mono); color: var(--muted); }
 .live { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-2); }
-.speak { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+/* Voice button (replaces the old checkbox) */
+.voice { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font: 500 .82rem var(--f-mono); color: var(--accent-2); background: transparent; border: 1px solid var(--line); border-radius: 99px; padding: 5px 14px; transition: border-color .2s, color .2s; }
+.voice:hover { border-color: var(--accent-2); }
+.voice[aria-pressed="false"] { color: var(--muted); }
+.eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+.eq i { width: 3px; height: 4px; background: currentColor; border-radius: 2px; }
+.voice[aria-pressed="false"] .eq i { height: 2px; opacity: .5; }
+.voice.talking .eq i { animation: eq .8s ease-in-out infinite; }
+.voice.talking .eq i:nth-child(2) { animation-delay: -.3s; }
+.voice.talking .eq i:nth-child(3) { animation-delay: -.6s; }
+@keyframes eq { 50% { height: 12px; } }
+.voice-note { margin: 0; padding: 0 18px 10px; font-size: .82rem; color: var(--accent); }
 .chat__log { padding: 18px; height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
 .msg { max-width: 82%; padding: 10px 14px; border-radius: 14px; animation: pop .3s ease; }
 .msg--bot { background: #16282e; border-bottom-left-radius: 4px; align-self: flex-start; }

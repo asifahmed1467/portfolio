@@ -146,7 +146,6 @@ const answers = {
 };
 const log = $("#chatLog");
 const chipBox = $("#chips");
-const speakToggle = $("#speakToggle");
 
 function addMsg(text, who) {
   const d = document.createElement("div");
@@ -156,14 +155,79 @@ function addMsg(text, who) {
   log.scrollTop = log.scrollHeight;
   return d;
 }
-function speak(text) {
-  try {
-    if (!speakToggle.checked || !("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
-  } catch (e) { /* speech not available: ignore */ }
+
+/* ---------- 8b. Automatic voice (browser text-to-speech) ----------
+   The bot speaks every reply on its own. The button only turns the voice
+   on or off. Fixes for the "sometimes no sound" problem:
+   - speak() runs inside the click, because browsers (especially Safari
+     and phones) only allow sound that starts from a user action.
+   - voices load late in some browsers, so we wait for "voiceschanged".
+   - Chrome stops long speech after about 15 seconds, so replies are
+     spoken one sentence at a time.
+   - If no sound starts, a short message tells the visitor why. */
+const voiceBtn = $("#voiceBtn");
+const voiceLabel = $("#voiceLabel");
+const voiceNote = $("#voiceNote");
+const synth = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window ? window.speechSynthesis : null;
+let voiceOn = true;
+let voices = [];
+
+function say(msg) {            // small status line under the chat
+  voiceNote.textContent = msg || "";
+  voiceNote.hidden = !msg;
 }
+function loadVoices() { try { voices = synth.getVoices() || []; } catch (e) { voices = []; } }
+function pickVoice() {
+  return voices.find((v) => /^en[-_](US|GB)/i.test(v.lang) && /google|natural|samantha|aria|jenny|daniel/i.test(v.name))
+      || voices.find((v) => /^en/i.test(v.lang))
+      || null;
+}
+function sentences(text) { return (text.match(/[^.!?]+[.!?]*/g) || [text]).map((s) => s.trim()).filter(Boolean); }
+
+function speak(text) {
+  if (!voiceOn || !synth) return;
+  try {
+    if (synth.speaking || synth.pending) synth.cancel();   // stop the previous answer
+    synth.resume();                                         // un-stick Chrome if it was paused
+    const parts = sentences(text);
+    const voice = pickVoice();
+    let started = false;
+    parts.forEach((part, i) => {
+      const u = new SpeechSynthesisUtterance(part);
+      if (voice) { u.voice = voice; u.lang = voice.lang; } else { u.lang = "en-US"; }
+      if (i === 0) u.onstart = () => { started = true; say(""); voiceBtn.classList.add("talking"); };
+      if (i === parts.length - 1) u.onend = () => voiceBtn.classList.remove("talking");
+      u.onerror = (e) => {
+        voiceBtn.classList.remove("talking");
+        if (e.error === "not-allowed") say("Your browser blocked the sound. Click the Voice button once, then ask again.");
+      };
+      synth.speak(u);
+    });
+    // If nothing started after a moment, tell the visitor instead of staying silent
+    setTimeout(() => {
+      if (!started && voiceOn) say("No sound started. Check your volume and that this device has a text-to-speech voice installed.");
+    }, 2500);
+  } catch (e) { console.error("voice:", e); say("Voice is not available in this browser. Replies stay as text."); }
+}
+
+if (synth) {
+  loadVoices();
+  if (synth.addEventListener) synth.addEventListener("voiceschanged", loadVoices);
+  voiceBtn.addEventListener("click", () => {
+    voiceOn = !voiceOn;
+    voiceBtn.setAttribute("aria-pressed", String(voiceOn));
+    voiceLabel.textContent = voiceOn ? "Voice on" : "Voice off";
+    say("");
+    if (voiceOn) speak("Voice on.");          // inside the click, so it also unlocks sound
+    else { try { synth.cancel(); } catch (e) {} voiceBtn.classList.remove("talking"); }
+  });
+} else {
+  voiceBtn.hidden = true;
+  say("Voice is not supported in this browser. Replies stay as text.");
+}
+
 function ask(q) {
+  speak(answers[q]);                          // start the voice right away, inside the click
   addMsg(q, "me");
   const dots = addMsg("thinking…", "bot");
   dots.classList.add("msg--typing");
@@ -171,8 +235,7 @@ function ask(q) {
     dots.classList.remove("msg--typing");
     dots.textContent = answers[q];
     log.scrollTop = log.scrollHeight;
-    speak(answers[q]);
-  }, reduceMotion ? 0 : 700);
+  }, reduceMotion ? 0 : 450);
 }
 Object.keys(answers).forEach((q) => {
   const b = document.createElement("button");
@@ -180,8 +243,7 @@ Object.keys(answers).forEach((q) => {
   b.addEventListener("click", () => ask(q));
   chipBox.appendChild(b);
 });
-addMsg("Hi! Pick a question below and I'll answer for Asif.", "bot");
-speakToggle.addEventListener("change", () => { if (!speakToggle.checked) try { speechSynthesis.cancel(); } catch (e) {} });
+addMsg("Hi! Pick a question below and I'll answer for Asif. I'll speak my replies out loud.", "bot");
 
 /* ---------- 9. LoRA calculator ---------- */
 const dims = [768, 1024, 2048, 4096, 8192];

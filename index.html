@@ -107,11 +107,15 @@
     <div class="chat reveal">
       <div class="chat__head">
         <span class="live"><span class="dot"></span> Demo bot</span>
-        <label class="speak"><input type="checkbox" id="speakToggle"> Read replies aloud (browser TTS)</label>
+        <button type="button" class="voice" id="voiceBtn" aria-pressed="true" title="Turn the bot's voice on or off">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span id="voiceLabel">Voice on</span>
+        </button>
       </div>
       <div class="chat__log" id="chatLog" aria-live="polite"></div>
+      <p class="voice-note" id="voiceNote" role="status" hidden></p>
       <div class="chat__chips" id="chips"></div>
-      <p class="chat__note">This is a small scripted demo that answers questions about me. It is not the Reve Systems voice bot.</p>
+      <p class="chat__note">Replies are spoken automatically. This is a small scripted demo that answers questions about me. It is not the Reve Systems voice bot.</p>
     </div>
   </div>
 </section>
