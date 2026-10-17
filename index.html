@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Asif Ahmed | Voice AI &amp; NLP Developer</title>
+  <meta name="description" content="Portfolio of Asif Ahmed, Software Development Intern at Reve Systems working on voice bots, NLP, LLM fine-tuning with LoRA, and TTS.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Soft glow that follows the mouse (see script.js) -->
+<div class="glow" aria-hidden="true"></div>
+
+<!-- ============ NAVBAR ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a href="#top" class="logo">asif<span>.</span>ahmed</a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#voicebot">Voice Bot</a>
+      <a href="#lab">AI Lab</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact" class="nav__cta">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <canvas id="wave" aria-hidden="true"></canvas>
+  <div class="wrap hero__in">
+    <div class="hero__text">
+      <p class="eyebrow"><span class="dot"></span> Software Development Intern @ Reve Systems</p>
+      <h1>Hi, I'm <span class="grad">Asif Ahmed</span>.</h1>
+      <p class="typing" aria-live="polite">I work on <span id="typed"></span><span class="caret">|</span></p>
+      <p class="lead">I'm building a voice bot system: speech in, language model in the middle, natural speech out. CSE student (Data Science, AI &amp; ML) at AIUB with a 3.85 CGPA.</p>
+      <div class="hero__btns">
+        <a href="#voicebot" class="btn btn--primary">See the voice bot</a>
+        <a href="#contact" class="btn">Contact me</a>
+        <a href="resume.pdf" class="btn btn--ghost" data-resume>Resume (PDF)</a>
+      </div>
+    </div>
+    <div class="hero__photo">
+      <div class="ring"></div>
+      <img src="images/profile.jpg" alt="Portrait of Asif Ahmed" width="320" height="320">
+      <span class="tag tag--a">NLP</span>
+      <span class="tag tag--b">LoRA</span>
+      <span class="tag tag--c">TTS</span>
+    </div>
+  </div>
+</section>
+
+<!-- Scrolling tech strip -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Python</span><span>NLP</span><span>LLM</span><span>Fine-Tuning</span><span>LoRA</span><span>TTS</span><span>Voice Bots</span><span>Machine Learning</span><span>SQL</span><span>Java</span><span>C++</span><span>JavaScript</span>
+    <span>Python</span><span>NLP</span><span>LLM</span><span>Fine-Tuning</span><span>LoRA</span><span>TTS</span><span>Voice Bots</span><span>Machine Learning</span><span>SQL</span><span>Java</span><span>C++</span><span>JavaScript</span>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="section">
+  <div class="wrap">
+    <h2 class="reveal">About me</h2>
+    <div class="about reveal">
+      <div>
+        <p>I'm a Computer Science &amp; Engineering student at American International University-Bangladesh, majoring in Data Science, AI &amp; ML. Right now I'm an intern at <strong>Reve Systems</strong>, working on a voice bot project that covers NLP, LLM fine-tuning with LoRA, and text-to-speech.</p>
+        <p>Before that I built full-stack apps, database systems and graphics projects. I also like research: I co-authored two papers that are under review, and my thesis looks at quantized Bangla large language models.</p>
+      </div>
+      <ul class="stats">
+        <li><b data-count="3.85" data-dec="2">3.85</b><span>CGPA (out of 4.00)</span></li>
+        <li><b data-count="5">5</b><span>Dean's Awards in a row</span></li>
+        <li><b data-count="2">2</b><span>Papers under review</span></li>
+        <li><b data-count="5">5</b><span>Projects built</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VOICE BOT: PIPELINE ============ -->
+<section id="voicebot" class="section section--alt">
+  <div class="wrap">
+    <p class="kicker reveal">Currently building</p>
+    <h2 class="reveal">Voice bot system</h2>
+    <p class="sub reveal">A voice bot listens, understands, thinks and speaks back. This is the general shape of the pipeline I work on at Reve Systems. Click a stage to read what it does.</p>
+
+    <div class="pipe reveal" id="pipe">
+      <button class="node" data-i="0"><i>🎙</i><b>Mic</b><small>audio in</small></button>
+      <span class="wire"></span>
+      <button class="node" data-i="1"><i>〰</i><b>ASR</b><small>speech → text</small></button>
+      <span class="wire"></span>
+      <button class="node" data-i="2"><i>🧠</i><b>NLP + LLM</b><small>LoRA fine-tuned</small></button>
+      <span class="wire"></span>
+      <button class="node" data-i="3"><i>🗣</i><b>TTS</b><small>text → speech</small></button>
+      <span class="wire"></span>
+      <button class="node" data-i="4"><i>🔊</i><b>Speaker</b><small>audio out</small></button>
+    </div>
+    <div class="pipe__info reveal" id="pipeInfo" aria-live="polite"></div>
+
+    <!-- Demo chat -->
+    <div class="chat reveal">
+      <div class="chat__head">
+        <span class="live"><span class="dot"></span> Demo bot</span>
+        <label class="speak"><input type="checkbox" id="speakToggle"> Read replies aloud (browser TTS)</label>
+      </div>
+      <div class="chat__log" id="chatLog" aria-live="polite"></div>
+      <div class="chat__chips" id="chips"></div>
+      <p class="chat__note">This is a small scripted demo that answers questions about me. It is not the Reve Systems voice bot.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AI LAB ============ -->
+<section id="lab" class="section">
+  <div class="wrap">
+    <p class="kicker reveal">AI lab</p>
+    <h2 class="reveal">Two ideas I work with, made interactive</h2>
+
+    <div class="lab">
+      <!-- LoRA -->
+      <article class="card reveal">
+        <h3>Why LoRA is cheap</h3>
+        <p class="sub">Full fine-tuning updates every weight in a layer. LoRA freezes the layer and trains two thin matrices (<code>A</code> and <code>B</code>) of rank <code>r</code> instead. Move the sliders.</p>
+
+        <label for="dim">Layer size <code>d</code> (d × d weight matrix): <output id="dimOut">4096</output></label>
+        <input type="range" id="dim" min="0" max="4" step="1" value="3">
+
+        <label for="rank">LoRA rank <code>r</code>: <output id="rankOut">8</output></label>
+        <input type="range" id="rank" min="1" max="64" step="1" value="8">
+
+        <div class="bars">
+          <div class="bar"><span>Full fine-tune</span><div><i id="barFull"></i></div><em id="valFull"></em></div>
+          <div class="bar"><span>LoRA (A and B)</span><div><i id="barLora" class="lora"></i></div><em id="valLora"></em></div>
+        </div>
+        <p class="result">LoRA trains only <b id="pct"></b> of the weights in this layer.</p>
+        <p class="math">full = d × d &nbsp;·&nbsp; LoRA = d × r + r × d</p>
+      </article>
+
+      <!-- Quantization -->
+      <article class="card reveal">
+        <h3>What quantization saves</h3>
+        <p class="sub">My thesis studies quantized Bangla LLMs. Fewer bits per weight means less memory, so bigger models fit on smaller hardware. Pick a size and a precision.</p>
+
+        <div class="seg" id="sizeSeg" role="group" aria-label="Model size">
+          <button data-v="1" class="on">1B</button><button data-v="3">3B</button><button data-v="7">7B</button><button data-v="13">13B</button>
+        </div>
+        <div class="seg" id="bitSeg" role="group" aria-label="Precision">
+          <button data-v="16" class="on">FP16</button><button data-v="8">INT8</button><button data-v="4">INT4</button>
+        </div>
+
+        <div class="mem">
+          <div class="mem__bar"><i id="memBar"></i></div>
+          <p><b id="memVal"></b> <span>for the weights alone</span></p>
+        </div>
+        <p class="math">memory ≈ parameters × bits ÷ 8 &nbsp;·&nbsp; ignores activations and the KV cache</p>
+        <p class="sub small">Smaller does not come free: quality, script handling and energy use can change. That is exactly what the thesis measures.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills" class="section section--alt">
+  <div class="wrap">
+    <h2 class="reveal">Skills</h2>
+    <div class="skills">
+      <div class="reveal"><h3>AI &amp; NLP</h3><ul class="chips"><li>NLP</li><li>LLMs</li><li>Fine-Tuning</li><li>LoRA</li><li>Text-to-Speech</li><li>Machine Learning</li></ul></div>
+      <div class="reveal"><h3>Languages</h3><ul class="chips"><li>Python</li><li>Java</li><li>C</li><li>C++</li><li>C#</li><li>JavaScript</li><li>R</li><li>SQL</li></ul></div>
+      <div class="reveal"><h3>Web &amp; Data</h3><ul class="chips"><li>HTML5</li><li>CSS3</li><li>PHP</li><li>REST APIs</li><li>AJAX</li><li>MySQL</li><li>MS SQL Server</li><li>Basic MERN</li></ul></div>
+      <div class="reveal"><h3>Tools &amp; Concepts</h3><ul class="chips"><li>Git &amp; GitHub</li><li>.NET</li><li>WinForms</li><li>OOP</li><li>Data Structures &amp; Algorithms</li><li>Computer Graphics</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience" class="section">
+  <div class="wrap">
+    <h2 class="reveal">Experience &amp; education</h2>
+    <ol class="timeline">
+      <li class="reveal">
+        <span class="when">Present</span>
+        <h3>Software Development Intern <small>Reve Systems</small></h3>
+        <ul>
+          <li>Working on a voice bot system as part of the engineering team.</li>
+          <li>NLP work, LLM fine-tuning with LoRA, and text-to-speech.</li>
+        </ul>
+      </li>
+      <li class="reveal">
+        <span class="when">Ongoing</span>
+        <h3>Thesis <small>AIUB · Supervisor: Dr. Nazib Abdun Nasir</small></h3>
+        <p>Assessing Script Integrity, Performance Degradation, and Energy Efficiency in Quantized Bangla Large Language Models.</p>
+      </li>
+      <li class="reveal">
+        <span class="when">Graduating 2026</span>
+        <h3>B.Sc. in Computer Science &amp; Engineering <small>American International University-Bangladesh</small></h3>
+        <p>Major: Data Science, AI &amp; ML · CGPA 3.85 / 4.00 · 5-time consecutive Dean's Award winner.</p>
+      </li>
+      <li class="reveal">
+        <span class="when">2019 · 2021</span>
+        <h3>SSC &amp; HSC <small>BAF Shaheen College Kurmitola</small></h3>
+        <p>GPA 5.00 in both.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects" class="section section--alt">
+  <div class="wrap">
+    <h2 class="reveal">Projects</h2>
+    <div class="grid">
+
+      <article class="proj proj--feat reveal">
+        <span class="badge">Internship · in progress</span>
+        <h3>Voice Bot System</h3>
+        <p>An end-to-end voice assistant at Reve Systems. My work covers NLP, fine-tuning a language model with LoRA, and text-to-speech output. Company work, so the code is private.</p>
+        <ul class="tech"><li>NLP</li><li>LLM</li><li>LoRA</li><li>TTS</li><li>Python</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <span class="badge">Research</span>
+        <h3>Quantized Bangla LLMs</h3>
+        <p>Thesis on script integrity, performance degradation and energy efficiency in quantized Bangla language models.</p>
+        <ul class="tech"><li>LLM</li><li>Quantization</li><li>Bangla NLP</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <h3>Decentralized Crime Reporting System</h3>
+        <p>Secure citizen incident submissions with real-time authority monitoring and live updates through REST APIs and AJAX.</p>
+        <ul class="tech"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>PHP</li><li>AJAX</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <h3>Scenic View Renderer</h3>
+        <p>Interactive 2D/3D scene combining urban, river and village landscapes, built with GLUT functions.</p>
+        <ul class="tech"><li>C++</li><li>OpenGL</li><li>GLUT</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <h3>Café Management System</h3>
+        <p>Desktop app for billing, menu management, order tracking and inventory, designed with OOP principles.</p>
+        <ul class="tech"><li>C#</li><li>.NET</li><li>WinForms</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <h3>Hospital Management System</h3>
+        <p>Modular application for patient records, doctor scheduling and appointments.</p>
+        <ul class="tech"><li>Java</li><li>OOP</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <h3>Library Management System</h3>
+        <p>Database-driven system for books, issue records and fines, with optimized SQL queries.</p>
+        <ul class="tech"><li>MySQL</li><li>SQL</li></ul>
+      </article>
+    </div>
+
+    <h3 class="subhead reveal">Publications (under review)</h3>
+    <ul class="pubs reveal">
+      <li>“Smart Governance Framework for Project Prioritization Using AHP and Blockchain.” Mahfuz Ahmed, A. Ahmed, et al.</li>
+      <li>“Unsupervised Discovery of Human-AI Collaboration Patterns in Enterprise and Management Systems.” Asif Ahmed, Mahfuz Ahmed, et al. Submitted to ICCA 2026.</li>
+    </ul>
+    <p class="cert reveal"><b>Certifications:</b> Python for Everybody (Coursera) · Google Data Analytics Professional Certificate (Coursera) · IT Essentials (Cisco Networking Academy)</p>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="section contact">
+  <div class="wrap">
+    <h2 class="reveal">Let's talk</h2>
+    <p class="sub reveal">Open to internships, research collaboration and conversations about voice AI. Based in Dhaka, Bangladesh.</p>
+    <div class="contact__row reveal">
+      <button class="btn btn--primary" id="copyMail" data-mail="rockyasif825@gmail.com">Copy email</button>
+      <a class="btn" href="mailto:rockyasif825@gmail.com">rockyasif825@gmail.com</a>
+      <a class="btn" href="https://github.com/asifahmed1467" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/asif-ahmed-348652296" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <p class="toast" id="toast" role="status"></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <span>© <span id="year">2026</span> Asif Ahmed</span>
+    <a href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
